@@ -5,7 +5,8 @@ return {
     require("toggleterm").setup {
       size = 60,
       open_mapping = [[<c-\>]],
-      direction = 'vertical',
+      direction = 'float',
+      insert_mappings = true, -- whether or not the open mapping applies in insert mode
       shell = 'zsh'
     }
   end

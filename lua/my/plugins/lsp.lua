@@ -10,6 +10,8 @@ local lsp_format_on_save = function(bufnr)
   })
 end
 
+
+
 return {
   'VonHeikemen/lsp-zero.nvim',
   branch = 'v3.x',
@@ -35,7 +37,7 @@ return {
       info = '»'
     })
 
-    lsp_zero.on_attach(function(_, bufnr)
+    lsp_zero.on_attach(function(client, bufnr)
       local opts = { buffer = bufnr, remap = false }
       lsp_zero.preset('recommended')
 
@@ -134,33 +136,42 @@ return {
               'vue',
             },
             settings = {
-              javascript = {
-                inlayHints = {
-                  includeInlayEnumMemberValueHints = true,
-                  includeInlayFunctionLikeReturnTypeHints = true,
-                  includeInlayFunctionParameterTypeHints = true,
-                  includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-                  includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                  includeInlayPropertyDeclarationTypeHints = true,
-                  includeInlayVariableTypeHints = true,
-                },
-              },
               typescript = {
                 inlayHints = {
-                  includeInlayEnumMemberValueHints = true,
-                  includeInlayFunctionLikeReturnTypeHints = true,
-                  includeInlayFunctionParameterTypeHints = true,
-                  includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+                  includeInlayParameterNameHints = "all",
                   includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                  includeInlayPropertyDeclarationTypeHints = true,
+                  includeInlayFunctionParameterTypeHints = true,
                   includeInlayVariableTypeHints = true,
+                  includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+                  includeInlayPropertyDeclarationTypeHints = true,
+                  includeInlayFunctionLikeReturnTypeHints = true,
+                  includeInlayEnumMemberValueHints = true,
                 },
               },
-            },
+              javascript = {
+                inlayHints = {
+                  includeInlayParameterNameHints = "all",
+                  includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                  includeInlayFunctionParameterTypeHints = true,
+                  includeInlayVariableTypeHints = true,
+                  includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+                  includeInlayPropertyDeclarationTypeHints = true,
+                  includeInlayFunctionLikeReturnTypeHints = true,
+                  includeInlayEnumMemberValueHints = true,
+                },
+              },
+            }
           })
         end,
         volar = function()
-          require('lspconfig').volar.setup({})
+          require('lspconfig').volar.setup({
+            filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+            init_options = {
+              vue = {
+                hybridMode = false,
+              },
+            },
+          })
         end,
       },
       opts = {
